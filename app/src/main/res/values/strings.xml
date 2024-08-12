@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">fastFoodApp</string>
+    <string name="title_activity_category_list_screen">CategoryListScreen</string>
+</resources>
