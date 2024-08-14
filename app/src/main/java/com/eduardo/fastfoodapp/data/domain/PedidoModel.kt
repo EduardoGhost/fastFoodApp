@@ -7,6 +7,7 @@ data class FoodItem(
     val dsc: String,
     val price: Double,
     val rate: Int,
-    val country: String
+    val country: String,
+    val quantity: Int,
 
 )

@@ -27,18 +27,10 @@ fun ItemListScreen(items: List<FoodItem>, viewModel: PedidoViewModel,  navContro
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Item List")
-                },
+                    Text(text = "Item List") },
                 actions = {
-                    IconButton(onClick = {
-                        // Navegar para a tela de carrinho
-                        // criar a tela de carrinho
-                        navController.navigate("cart")
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.ShoppingCart,
-                            contentDescription = "Carrinho"
-                        )
+                    IconButton(onClick = { navController.navigate("pedidoList") }) {
+                        Icon(Icons.Default.ShoppingCart, contentDescription = "Carrinho")
                     }
                 }
             )

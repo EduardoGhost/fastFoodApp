@@ -16,5 +16,6 @@ fun PedidoEntity.asExternalModel(): FoodItem = FoodItem(
     dsc = "",
     price = this.price,
     rate = 0,
-    country = ""
+    country = "",
+    quantity = 1
 )

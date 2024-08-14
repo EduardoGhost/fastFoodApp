@@ -9,6 +9,7 @@ import com.eduardo.fastfoodapp.data.domain.FoodItem
 import com.eduardo.fastfoodapp.data.fetchPaginationData
 import com.eduardo.fastfoodapp.ui.screens.CategoryListScreen
 import com.eduardo.fastfoodapp.ui.screens.ItemListScreen
+import com.eduardo.fastfoodapp.ui.screens.PedidoListScreen
 import com.eduardo.fastfoodapp.ui.screens.fetchFoodItemsByCategory
 import com.eduardo.fastfoodapp.viewmodel.PedidoViewModel
 
@@ -51,5 +52,10 @@ fun NavigationComponent() {
                 )
             }
         }
+        composable("pedidoList") {
+            val viewModel: PedidoViewModel = hiltViewModel()
+            PedidoListScreen(viewModel = viewModel)
+        }
+
     }
 }

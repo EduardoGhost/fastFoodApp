@@ -20,7 +20,6 @@ class PedidoRepositoryImpl @Inject constructor(
         val pedidos = pedidoDao.getAllPedidos().map { it.asExternalModel() }
         Log.d("PedidoRepository", "Fetched pedidos: $pedidos")
         return pedidoDao.getAllPedidos().map { it.asExternalModel() }
-
     }
 }
 
