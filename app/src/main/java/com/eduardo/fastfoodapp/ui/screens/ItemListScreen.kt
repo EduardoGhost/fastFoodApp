@@ -11,42 +11,44 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.eduardo.fastfoodapp.data.domain.FoodItem
+import com.eduardo.fastfoodapp.viewmodel.PedidoViewModel
 
 //item display
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ItemListScreen(
-    items: List<FoodItem>,
-    onAddToCartClicked: (FoodItem) -> Unit
-) {
+fun ItemListScreen(items: List<FoodItem>, viewModel: PedidoViewModel,  navController: NavController) {
     Log.d("UI_LOG", "Displaying ${items.size}")
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Item List") },
+                title = {
+                    Text(text = "Item List")
+                },
                 actions = {
                     IconButton(onClick = {
-                        // Ação ao clicar no ícone do carrinho
-                        Log.d("UI_LOG", "Carrinho clicked")
+                        // Navegar para a tela de carrinho
+                        // criar a tela de carrinho
+                        navController.navigate("cart")
                     }) {
-                        Icon(Icons.Default.ShoppingCart, contentDescription = "Carrinho")
+                        Icon(
+                            imageVector = Icons.Default.ShoppingCart,
+                            contentDescription = "Carrinho"
+                        )
                     }
-                },
-                colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary
-            ))
+                }
+            )
         }
-    ) { paddingValues ->
+    ) { innerPadding ->
         LazyColumn(
-            contentPadding = paddingValues,
-            modifier = Modifier.fillMaxSize()
+            contentPadding = innerPadding
         ) {
             items(items) { item ->
+                Log.d("UI_LOG", "Item: ${item.name}, Price: ${item.price}, Description: ${item.dsc}")
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
@@ -62,12 +64,12 @@ fun ItemListScreen(
                             .padding(bottom = 8.dp)
                     )
                     Text(
-                        text = item.name,
+                        text = "${item.name}",
                         style = MaterialTheme.typography.titleLarge,
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
                     Text(
-                        text = item.dsc,
+                        text = "${item.dsc}",
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
@@ -77,23 +79,20 @@ fun ItemListScreen(
                     )
                     Button(
                         onClick = {
-                            onAddToCartClicked(item)
+                            // Adiciona item no carrinho
+                            viewModel.addPedidoToCart(item, quantity = 1)
+                            Log.d("UI_LOG", "Item ${item.name} added to cart")
                         },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Yellow,
-                            contentColor = Color.Black
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp)
+                        modifier = Modifier.padding(top = 8.dp)
                     ) {
-                        Text("Adicionar ao Carrinho")
+                        Text(text = "Adicionar ao Carrinho")
                     }
                 }
             }
         }
     }
 }
+
 
 
 
