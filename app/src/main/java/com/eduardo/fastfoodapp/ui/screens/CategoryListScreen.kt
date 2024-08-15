@@ -51,7 +51,7 @@ fun CategoryListScreen(
             ) {
                 items(categoryMap.toList()) { (category, count) ->
                     Text(
-                        text = "$category: $count items",
+                        text = "$category",
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp)

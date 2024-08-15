@@ -1,8 +1,9 @@
 package com.eduardo.fastfoodapp.data.local
 
 import android.util.Log
+import com.eduardo.fastfoodapp.data.dao.PedidoDao
 import com.eduardo.fastfoodapp.data.domain.FoodItem
-import com.eduardo.fastfoodapp.data.domain.PedidoRepository
+import com.eduardo.fastfoodapp.data.repository.PedidoRepository
 import javax.inject.Inject
 
 class PedidoRepositoryImpl @Inject constructor(

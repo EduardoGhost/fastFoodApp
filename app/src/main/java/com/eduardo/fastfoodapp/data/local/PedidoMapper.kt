@@ -1,6 +1,7 @@
 package com.eduardo.fastfoodapp.data.local
 
 import com.eduardo.fastfoodapp.data.domain.FoodItem
+import com.eduardo.fastfoodapp.data.entities.PedidoEntity
 
 fun FoodItem.toEntity(quantity: Int): PedidoEntity = PedidoEntity(
     id = this.id,

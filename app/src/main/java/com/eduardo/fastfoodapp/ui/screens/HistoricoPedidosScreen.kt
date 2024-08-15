@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.eduardo.fastfoodapp.data.local.HistoricoPedidoEntity
+import com.eduardo.fastfoodapp.data.entities.HistoricoPedidoEntity
 import com.eduardo.fastfoodapp.viewmodel.HistoricoPedidoViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

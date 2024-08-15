@@ -1,6 +1,7 @@
 package com.eduardo.fastfoodapp.ui.screens
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -14,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
@@ -24,6 +26,7 @@ import com.eduardo.fastfoodapp.viewmodel.PedidoViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemListScreen(items: List<FoodItem>, viewModel: PedidoViewModel,  navController: NavController) {
+    val context = LocalContext.current
     Log.d("UI_LOG", "Displaying ${items.size}")
 
     Scaffold(
@@ -102,6 +105,7 @@ fun ItemListScreen(items: List<FoodItem>, viewModel: PedidoViewModel,  navContro
                             // Adiciona item no carrinho
                             val quantityInt = quantity.toIntOrNull() ?: 1
                             viewModel.addPedidoToCart(item, quantityInt)
+                            Toast.makeText(context, "Item adicionado ao Carrinho!", Toast.LENGTH_SHORT).show()
                             Log.d("UI_LOG", "Item ${item.name} added to cart")
                         },
                         modifier = Modifier.padding(top = 8.dp)

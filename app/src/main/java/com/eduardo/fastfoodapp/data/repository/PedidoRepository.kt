@@ -1,4 +1,6 @@
-package com.eduardo.fastfoodapp.data.domain
+package com.eduardo.fastfoodapp.data.repository
+
+import com.eduardo.fastfoodapp.data.domain.FoodItem
 
 interface PedidoRepository {
 

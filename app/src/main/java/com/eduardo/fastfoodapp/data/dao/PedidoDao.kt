@@ -1,6 +1,7 @@
-package com.eduardo.fastfoodapp.data.local
+package com.eduardo.fastfoodapp.data.dao
 
 import androidx.room.*
+import com.eduardo.fastfoodapp.data.entities.PedidoEntity
 
 @Dao
 interface PedidoDao {

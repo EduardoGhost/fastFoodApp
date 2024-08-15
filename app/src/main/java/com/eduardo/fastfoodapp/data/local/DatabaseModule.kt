@@ -2,6 +2,8 @@ package com.eduardo.fastfoodapp.data.local
 
 import android.content.Context
 import androidx.room.Room
+import com.eduardo.fastfoodapp.data.dao.HistoricoPedidoDao
+import com.eduardo.fastfoodapp.data.dao.PedidoDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

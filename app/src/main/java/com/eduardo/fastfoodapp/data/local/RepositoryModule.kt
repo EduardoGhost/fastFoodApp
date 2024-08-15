@@ -1,7 +1,11 @@
 package com.eduardo.fastfoodapp.data.local
 
-import com.eduardo.fastfoodapp.data.domain.HistoricoPedidoRepository
-import com.eduardo.fastfoodapp.data.domain.PedidoRepository
+import com.eduardo.fastfoodapp.data.dao.HistoricoPedidoDao
+import com.eduardo.fastfoodapp.data.dao.PedidoDao
+import com.eduardo.fastfoodapp.data.local.HistoricoPedidoRepositoryImpl
+import com.eduardo.fastfoodapp.data.local.PedidoRepositoryImpl
+import com.eduardo.fastfoodapp.data.repository.HistoricoPedidoRepository
+import com.eduardo.fastfoodapp.data.repository.PedidoRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

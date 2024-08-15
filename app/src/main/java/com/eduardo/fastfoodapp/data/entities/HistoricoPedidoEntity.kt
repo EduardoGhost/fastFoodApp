@@ -1,4 +1,4 @@
-package com.eduardo.fastfoodapp.data.local
+package com.eduardo.fastfoodapp.data.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
