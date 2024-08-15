@@ -66,11 +66,11 @@ fun CategoryListScreen(
                                 style = MaterialTheme.typography.titleMedium,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
-                            Text(
-                                text = "$count items",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
+//                            Text(
+//                                text = "$count items",
+//                                style = MaterialTheme.typography.bodyMedium,
+//                                color = MaterialTheme.colorScheme.onSurfaceVariant
+//                            )
                         }
                     }
                 }
