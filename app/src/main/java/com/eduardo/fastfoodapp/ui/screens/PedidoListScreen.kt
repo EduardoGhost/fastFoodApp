@@ -1,26 +1,23 @@
 package com.eduardo.fastfoodapp.ui.screens
 
-import androidx.compose.foundation.Image
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
 import com.eduardo.fastfoodapp.data.domain.FoodItem
 import com.eduardo.fastfoodapp.viewmodel.PedidoViewModel
 
-//tela de lista de pedidos / carrinho
+//tela de lista de pedidos / checkout
 @Composable
 fun PedidoListScreen(viewModel: PedidoViewModel) {
     val pedidos by viewModel.pedidos.collectAsState(initial = emptyList())
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -43,6 +40,22 @@ fun PedidoListScreen(viewModel: PedidoViewModel) {
                 }
             }
         }
+        Spacer(modifier = Modifier.weight(1f))
+
+        Text(
+            text = "Total: R$${pedidos.sumOf { it.price * it.quantity }}",
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier.padding(top = 16.dp)
+        )
+
+        Button(
+            onClick = { viewModel.finalizarCompra()
+                Toast.makeText(context, "Compra concluída com sucesso!", Toast.LENGTH_SHORT).show()
+                      },
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            Text(text = "Concluir Compra")
+        }
     }
 }
 
@@ -55,8 +68,6 @@ fun PedidoItem(pedido: FoodItem) {
     ) {
         Text(text = pedido.name, style = MaterialTheme.typography.titleMedium)
         Text(text = "Quantidade: ${pedido.quantity}", style = MaterialTheme.typography.bodyMedium)
-        Text(text = "Preço: R$${pedido.price}", style = MaterialTheme.typography.bodyMedium)
+        Text(text = "Preço: R$${pedido.price*pedido.quantity}", style = MaterialTheme.typography.bodyMedium)
     }
 }
-
-

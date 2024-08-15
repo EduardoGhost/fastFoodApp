@@ -21,6 +21,10 @@ class PedidoRepositoryImpl @Inject constructor(
         Log.d("PedidoRepository", "Fetched pedidos: $pedidos")
         return pedidoDao.getAllPedidos().map { it.asExternalModel() }
     }
+
+    override suspend fun clearPedidos() {
+        pedidoDao.clearPedidos()
+    }
 }
 
 

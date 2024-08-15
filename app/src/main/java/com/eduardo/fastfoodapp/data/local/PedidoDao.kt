@@ -9,6 +9,9 @@ interface PedidoDao {
 
     @Query("SELECT * FROM pedido")
     suspend fun getAllPedidos(): List<PedidoEntity>
+
+    @Query("DELETE FROM pedido")
+    suspend fun clearPedidos()
 }
 
 ////    @Query("SELECT * FROM pedidos WHERE id = :id")

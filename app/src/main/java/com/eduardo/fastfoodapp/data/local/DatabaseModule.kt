@@ -27,4 +27,9 @@ object DatabaseModule {
     fun providePedidoDao(database: AppDatabase): PedidoDao {
         return database.pedidoDao()
     }
+
+    @Provides
+    fun provideHistoricoPedidoDao(database: AppDatabase): HistoricoPedidoDao {
+        return database.historicoPedidoDao()
+    }
 }

@@ -1,5 +1,6 @@
 package com.eduardo.fastfoodapp.data.local
 
+import com.eduardo.fastfoodapp.data.domain.HistoricoPedidoRepository
 import com.eduardo.fastfoodapp.data.domain.PedidoRepository
 import dagger.Module
 import dagger.Provides
@@ -15,6 +16,13 @@ object RepositoryModule {
         pedidoDao: PedidoDao
     ): PedidoRepository {
         return PedidoRepositoryImpl(pedidoDao)
+    }
+
+    @Provides
+    fun provideHistoricoPedidoRepository(
+        historicoPedidoDao: HistoricoPedidoDao
+    ): HistoricoPedidoRepository {
+        return HistoricoPedidoRepositoryImpl(historicoPedidoDao)
     }
 }
 
