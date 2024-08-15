@@ -30,10 +30,8 @@ fun CategoryListScreen(
                 windowInsets = WindowInsets.systemBars,
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
-
                 ),
                 scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
-
                 actions = {
                     IconButton(onClick = {
                         navController.navigate("historicoPedidoList")
@@ -41,22 +39,40 @@ fun CategoryListScreen(
                         Icon(Icons.Default.InsertChart, contentDescription = "Ver Histórico", tint = Color.White)
                     }
                 }
-
             )
         },
         content = { paddingValues ->
             LazyColumn(
                 contentPadding = paddingValues,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(8.dp)
             ) {
                 items(categoryMap.toList()) { (category, count) ->
-                    Text(
-                        text = "$category",
+                    Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp)
-                            .clickable { onCategoryClick(category) }
-                    )
+                            .padding(vertical = 8.dp)
+                            .clickable { onCategoryClick(category) },
+                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth()
+                        ) {
+                            Text(
+                                text = category,
+                                style = MaterialTheme.typography.titleMedium,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                            Text(
+                                text = "$count items",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
                 }
             }
         }
