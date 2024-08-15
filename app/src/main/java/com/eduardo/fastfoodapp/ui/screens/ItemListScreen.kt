@@ -1,6 +1,5 @@
 package com.eduardo.fastfoodapp.ui.screens
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -25,15 +24,20 @@ import com.eduardo.fastfoodapp.viewmodel.PedidoViewModel
 //item display
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ItemListScreen(items: List<FoodItem>, viewModel: PedidoViewModel,  navController: NavController) {
+fun ItemListScreen(items: List<FoodItem>, viewModel: PedidoViewModel, navController: NavController) {
     val context = LocalContext.current
-    Log.d("UI_LOG", "Displaying ${items.size}")
+    var searchQuery by remember { mutableStateOf("") }
+
+    val filteredItems = if (searchQuery.isEmpty()) {
+        items
+    } else {
+        items.filter { it.name.contains(searchQuery, ignoreCase = true) || it.dsc.contains(searchQuery, ignoreCase = true) }
+    }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {
-                    Text(text = "Item List", color = Color.White) },
+                title = { Text(text = "Item List", color = Color.White) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Voltar", tint = Color.White)
@@ -45,72 +49,75 @@ fun ItemListScreen(items: List<FoodItem>, viewModel: PedidoViewModel,  navContro
 
                     ),
                 scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
-
                 actions = {
                     IconButton(onClick = { navController.navigate("pedidoList") }) {
                         Icon(Icons.Default.ShoppingCart, contentDescription = "Carrinho", tint = Color.White)
                     }
-
                 }
             )
         }
     ) { innerPadding ->
-        LazyColumn(
-            contentPadding = innerPadding
-        ) {
-            items(items) { item ->
-                Log.d("UI_LOG", "Item: ${item.name}, Price: ${item.price}, Description: ${item.dsc}")
-                var quantity by remember { mutableStateOf("1") }
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
-                ) {
-                    Image(
-                        painter = rememberImagePainter(item.img),
-                        contentDescription = item.name,
+        Column(modifier = Modifier.padding(innerPadding)) {
+            TextField(
+                value = searchQuery,
+                onValueChange = { searchQuery = it },
+                label = { Text("Search") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            )
+            LazyColumn {
+                items(filteredItems) { item ->
+                    var quantity by remember { mutableStateOf("1") }
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
+                            .padding(8.dp)
                             .fillMaxWidth()
-                            .height(200.dp)
-                            .padding(bottom = 8.dp)
-                    )
-                    Text(
-                        text = "${item.name}",
-                        style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.padding(bottom = 4.dp)
-                    )
-                    Text(
-                        text = "${item.dsc}",
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(bottom = 4.dp)
-                    )
-                    Text(
-                        text = "Price: $${item.price}",
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-
-                    TextField(
-                        value = quantity,
-                        onValueChange = { quantity = it },
-                        label = { Text("Quantity") },
-                        modifier = Modifier
-                            .width(100.dp)
-                            .border(1.dp, Color.Gray)
-                            .padding(8.dp),
-                    )
-
-                    Button(
-                        onClick = {
-                            // Adiciona item no carrinho
-                            val quantityInt = quantity.toIntOrNull() ?: 1
-                            viewModel.addPedidoToCart(item, quantityInt)
-                            Toast.makeText(context, "Item adicionado ao Carrinho!", Toast.LENGTH_SHORT).show()
-                            Log.d("UI_LOG", "Item ${item.name} added to cart")
-                        },
-                        modifier = Modifier.padding(top = 8.dp)
                     ) {
-                        Text(text = "Adicionar ao Carrinho")
+                        Image(
+                            painter = rememberImagePainter(item.img),
+                            contentDescription = item.name,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(200.dp)
+                                .padding(bottom = 8.dp)
+                        )
+                        Text(
+                            text = "${item.name}",
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = Modifier.padding(bottom = 4.dp)
+                        )
+                        Text(
+                            text = "${item.dsc}",
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.padding(bottom = 4.dp)
+                        )
+                        Text(
+                            text = "Price: $${item.price}",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+
+                        TextField(
+                            value = quantity,
+                            onValueChange = { quantity = it },
+                            label = { Text("Quantity") },
+                            modifier = Modifier
+                                .width(100.dp)
+                                .border(1.dp, Color.Gray)
+                                .padding(8.dp),
+                        )
+
+                        Button(
+                            onClick = {
+                                val quantityInt = quantity.toIntOrNull() ?: 1
+                                viewModel.addPedidoToCart(item, quantityInt)
+                                Toast.makeText(context, "Item adicionado ao Carrinho!", Toast.LENGTH_SHORT).show()
+                            },
+                            modifier = Modifier.padding(top = 8.dp)
+                        ) {
+                            Text(text = "Adicionar ao Carrinho")
+                        }
                     }
                 }
             }
