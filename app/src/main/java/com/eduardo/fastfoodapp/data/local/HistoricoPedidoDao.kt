@@ -12,5 +12,5 @@ interface HistoricoPedidoDao {
     suspend fun insertHistoricoPedido(historicoPedido: HistoricoPedidoEntity)
 
     @Query("SELECT * FROM historico_pedido")
-    fun getAllHistoricoPedidos(): List<HistoricoPedidoEntity>
+    suspend fun getAllHistoricoPedidos(): List<HistoricoPedidoEntity>
 }
