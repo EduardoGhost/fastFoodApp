@@ -7,10 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.eduardo.fastfoodapp.data.domain.FoodItem
 import com.eduardo.fastfoodapp.data.fetchPaginationData
-import com.eduardo.fastfoodapp.ui.screens.CategoryListScreen
-import com.eduardo.fastfoodapp.ui.screens.ItemListScreen
-import com.eduardo.fastfoodapp.ui.screens.PedidoListScreen
-import com.eduardo.fastfoodapp.ui.screens.fetchFoodItemsByCategory
+import com.eduardo.fastfoodapp.ui.screens.*
 import com.eduardo.fastfoodapp.viewmodel.PedidoViewModel
 
 @Composable
@@ -30,7 +27,7 @@ fun NavigationComponent() {
                 categoryMap = categoryMap,
                 onCategoryClick = { category ->
                     navController.navigate("itemList/$category")
-                }
+                },  navController = navController
             )
         }
 
@@ -54,8 +51,11 @@ fun NavigationComponent() {
         }
         composable("pedidoList") {
             val viewModel: PedidoViewModel = hiltViewModel()
-            PedidoListScreen(viewModel = viewModel)
+            PedidoListScreen(viewModel = viewModel, navController = navController)
         }
 
+        composable("historicoPedidoList") {
+            HistoricoPedidoScreen(navController = navController)
+        }
     }
 }

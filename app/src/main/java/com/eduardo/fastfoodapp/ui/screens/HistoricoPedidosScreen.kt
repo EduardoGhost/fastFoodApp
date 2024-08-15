@@ -6,43 +6,63 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.eduardo.fastfoodapp.data.local.HistoricoPedidoEntity
 import com.eduardo.fastfoodapp.viewmodel.HistoricoPedidoViewModel
 
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HistoricoPedidoScreen(viewModel: HistoricoPedidoViewModel = hiltViewModel()) {
+fun HistoricoPedidoScreen(
+    viewModel: HistoricoPedidoViewModel = hiltViewModel(),
+    navController: NavController
+) {
     val historicoPedidos by viewModel.historicoPedidos.collectAsState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        Text(
-            text = "Histórico de Pedidos",
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-
-        if (historicoPedidos.isEmpty()) {
-            Text(text = "Nenhum pedido realizado.", style = MaterialTheme.typography.bodyMedium)
-        } else {
-            LazyColumn {
-                items(historicoPedidos) { pedido ->
-                    HistoricoPedidoItem(pedido)
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = "Histórico de Pedidos", color = Color.White)
+                },
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Voltar", tint = Color.White)
+                    }
+                },
+                colors = TopAppBarDefaults.mediumTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                )
+            )
+        },
+        content = { padding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .padding(16.dp)
+            ) {
+                if (historicoPedidos.isEmpty()) {
+                    Text(text = "Nenhum pedido realizado.", style = MaterialTheme.typography.bodyMedium)
+                } else {
+                    LazyColumn {
+                        items(historicoPedidos) { pedido ->
+                            HistoricoPedidoItem(pedido)
+                        }
+                    }
                 }
             }
         }
-    }
+    )
 }
 
 @Composable

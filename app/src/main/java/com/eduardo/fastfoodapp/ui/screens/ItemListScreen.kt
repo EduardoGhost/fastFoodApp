@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -29,11 +30,24 @@ fun ItemListScreen(items: List<FoodItem>, viewModel: PedidoViewModel,  navContro
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Item List") },
+                    Text(text = "Item List", color = Color.White) },
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Voltar", tint = Color.White)
+                    }
+                },
+                windowInsets = WindowInsets.systemBars,
+                colors = TopAppBarDefaults.mediumTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+
+                    ),
+                scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
+
                 actions = {
                     IconButton(onClick = { navController.navigate("pedidoList") }) {
-                        Icon(Icons.Default.ShoppingCart, contentDescription = "Carrinho")
+                        Icon(Icons.Default.ShoppingCart, contentDescription = "Carrinho", tint = Color.White)
                     }
+
                 }
             )
         }
