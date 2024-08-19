@@ -11,14 +11,14 @@ suspend fun fetchPaginationData(): Map<String, Int> {
             if (paginationData != null) {
                 mapOf(
                     "BBQs" to paginationData.bbqs,
-                    "Best Foods" to paginationData.bestFoods,
+                    "Best-Foods" to paginationData.bestFoods,
                     "Breads" to paginationData.breads,
                     "Burgers" to paginationData.burgers,
                     "Chocolates" to paginationData.chocolates,
                     "Desserts" to paginationData.desserts,
                     "Drinks" to paginationData.drinks,
-                    "Fried Chicken" to paginationData.friedChicken,
-                    "Ice Cream" to paginationData.iceCream,
+                    "Fried-Chicken" to paginationData.friedChicken,
+                    "Ice-Cream" to paginationData.iceCream,
                     "Pizzas" to paginationData.pizzas,
                     "Porks" to paginationData.porks,
                     "Sandwiches" to paginationData.sandwiches,

@@ -1,5 +1,7 @@
 package com.eduardo.fastfoodapp.navegation
 
+import android.util.Log
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
@@ -7,7 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.eduardo.fastfoodapp.data.model.FoodItem
 import com.eduardo.fastfoodapp.data.repository.fetchPaginationData
-import com.eduardo.fastfoodapp.network.fetchFoodItemsByPage
+import com.eduardo.fastfoodapp.network.fetchFoodItemsByCategory
 import com.eduardo.fastfoodapp.ui.screens.*
 import com.eduardo.fastfoodapp.viewmodel.PedidoViewModel
 
@@ -32,13 +34,13 @@ fun NavigationComponent() {
             )
         }
 
-        composable("itemList/{category}") { backStackEntry ->
-            val category = backStackEntry.arguments?.getString("category")
-            if (category != null) {
+        composable("itemList/{categoryName}") { backStackEntry ->
+            val categoryName = backStackEntry.arguments?.getString("categoryName")
+            if (categoryName != null) {
                 var items by remember { mutableStateOf(listOf<FoodItem>()) }
 
-                LaunchedEffect(category) {
-                    val fetchedItems = fetchFoodItemsByPage(1, 20)
+                LaunchedEffect(categoryName) {
+                    val fetchedItems = fetchFoodItemsByCategory(categoryName)
                     items = fetchedItems
                 }
 
@@ -50,6 +52,7 @@ fun NavigationComponent() {
                 )
             }
         }
+
         composable("pedidoList") {
             val viewModel: PedidoViewModel = hiltViewModel()
             PedidoListScreen(viewModel = viewModel, navController = navController)

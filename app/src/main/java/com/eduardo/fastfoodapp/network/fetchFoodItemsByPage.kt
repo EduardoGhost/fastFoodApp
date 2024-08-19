@@ -3,27 +3,15 @@ package com.eduardo.fastfoodapp.network
 import android.util.Log
 import com.eduardo.fastfoodapp.data.model.FoodItem
 
-suspend fun fetchFoodItemsByPage(page: Int, limit: Int): List<FoodItem> {
+suspend fun fetchFoodItemsByCategory(categoryName: String): List<FoodItem> {
     return try {
-
-        val paginationResponse = RetrofitClient.apiService.getPaginationData()
-        if (paginationResponse.isSuccessful) {
-            val paginationData = paginationResponse.body()
-            Log.d("API_SUCCESS", "Pagination data fetched successfully: $paginationData")
-
-            val response = RetrofitClient.apiService.getFoodItems()
-            if (response.isSuccessful) {
-                val allItems = response.body() ?: emptyList()
-
-                val startIndex = (page - 1) * limit
-                val endIndex = (startIndex + limit).coerceAtMost(allItems.size)
-                allItems.subList(startIndex, endIndex)
-            } else {
-                Log.e("API_ERROR", "Response error: ${response.errorBody()?.string()}")
-                emptyList()
-            }
+        val response = RetrofitClient.apiService.getFoodItemsByCategory(categoryName)
+        if (response.isSuccessful) {
+            val foodItems = response.body() ?: emptyList()
+            Log.d("API_SUCCESS", "Fetched items for category '$categoryName': ${foodItems.size} items")
+            foodItems
         } else {
-            Log.e("API_ERROR", "Pagination Response error: ${paginationResponse.errorBody()?.string()}")
+            Log.e("API_ERROR", "Response error: ${response.errorBody()?.string()}")
             emptyList()
         }
     } catch (e: Exception) {
