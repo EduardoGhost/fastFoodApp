@@ -2,7 +2,7 @@ package com.eduardo.fastfoodapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eduardo.fastfoodapp.data.domain.FoodItem
+import com.eduardo.fastfoodapp.data.model.FoodItem
 import com.eduardo.fastfoodapp.data.repository.HistoricoPedidoRepository
 import com.eduardo.fastfoodapp.data.repository.PedidoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

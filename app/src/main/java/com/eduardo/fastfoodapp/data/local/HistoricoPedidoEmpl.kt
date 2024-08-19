@@ -2,7 +2,7 @@ package com.eduardo.fastfoodapp.data.local
 
 import android.util.Log
 import com.eduardo.fastfoodapp.data.dao.HistoricoPedidoDao
-import com.eduardo.fastfoodapp.data.domain.FoodItem
+import com.eduardo.fastfoodapp.data.model.FoodItem
 import com.eduardo.fastfoodapp.data.entities.HistoricoPedidoEntity
 import com.eduardo.fastfoodapp.data.repository.HistoricoPedidoRepository
 import javax.inject.Inject

@@ -1,7 +1,7 @@
 package com.eduardo.fastfoodapp.network
 
-import com.eduardo.fastfoodapp.data.PaginationResponse
-import com.eduardo.fastfoodapp.data.domain.FoodItem
+import com.eduardo.fastfoodapp.data.model.PaginationResponse
+import com.eduardo.fastfoodapp.data.model.FoodItem
 import retrofit2.Response
 import retrofit2.http.GET
 

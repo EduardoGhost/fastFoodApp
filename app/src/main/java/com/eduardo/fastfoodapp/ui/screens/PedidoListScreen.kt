@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.eduardo.fastfoodapp.data.domain.FoodItem
+import com.eduardo.fastfoodapp.data.model.FoodItem
 import com.eduardo.fastfoodapp.viewmodel.PedidoViewModel
 
 //tela de lista de pedidos / checkout

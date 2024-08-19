@@ -18,7 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
-import com.eduardo.fastfoodapp.data.domain.FoodItem
+import com.eduardo.fastfoodapp.data.model.FoodItem
 import com.eduardo.fastfoodapp.viewmodel.PedidoViewModel
 
 //item display

@@ -1,4 +1,4 @@
-package com.eduardo.fastfoodapp.data
+package com.eduardo.fastfoodapp.data.repository
 
 import android.util.Log
 import com.eduardo.fastfoodapp.network.RetrofitClient
@@ -26,10 +26,11 @@ suspend fun fetchPaginationData(): Map<String, Int> {
                     "Steaks" to paginationData.steaks
                 )
             } else {
+                Log.e("API_ERROR", "Pagination data is null")
                 emptyMap()
             }
         } else {
-            Log.e("API_RESPONSE", "Response error: ${response.errorBody()?.string()}")
+            Log.e("API_ERROR", "Response error: ${response.errorBody()?.string()}")
             emptyMap()
         }
     } catch (e: Exception) {

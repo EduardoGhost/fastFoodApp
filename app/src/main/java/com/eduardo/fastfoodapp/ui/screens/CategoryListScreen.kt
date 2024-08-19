@@ -1,6 +1,5 @@
 package com.eduardo.fastfoodapp.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,8 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.eduardo.fastfoodapp.data.domain.FoodItem
-import com.eduardo.fastfoodapp.network.RetrofitClient
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -66,39 +63,10 @@ fun CategoryListScreen(
                                 style = MaterialTheme.typography.titleMedium,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
-//                            Text(
-//                                text = "$count items",
-//                                style = MaterialTheme.typography.bodyMedium,
-//                                color = MaterialTheme.colorScheme.onSurfaceVariant
-//                            )
                         }
                     }
                 }
             }
         }
     )
-}
-
-
-//category display
-suspend fun fetchFoodItemsByCategory(category: String): List<FoodItem> {
-    return try {
-        val response = RetrofitClient.apiService.getFoodItems()
-        if (response.isSuccessful) {
-            val foodItems = response.body() ?: emptyList()
-            Log.d("API_SUCCESS", "Fetched items: ${foodItems.size} items")
-
-            // Filtrar por nome ou descrição se necessário
-            val filteredItems = foodItems.filter { it.dsc.contains(category, ignoreCase = true) }
-            Log.d("API_SUCCESS", "Filtered items for category '$category': ${filteredItems.size} items")
-
-            filteredItems
-        } else {
-            Log.e("API_ERROR", "Response error: ${response.errorBody()?.string()}")
-            emptyList()
-        }
-    } catch (e: Exception) {
-        Log.e("API_ERROR", "Exception: ${e.message}", e)
-        emptyList()
-    }
 }

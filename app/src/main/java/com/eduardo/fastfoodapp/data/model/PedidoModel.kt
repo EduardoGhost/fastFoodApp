@@ -1,4 +1,4 @@
-package com.eduardo.fastfoodapp.data.domain
+package com.eduardo.fastfoodapp.data.model
 
 data class FoodItem(
     val id: String,

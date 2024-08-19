@@ -5,8 +5,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.eduardo.fastfoodapp.data.domain.FoodItem
-import com.eduardo.fastfoodapp.data.fetchPaginationData
+import com.eduardo.fastfoodapp.data.model.FoodItem
+import com.eduardo.fastfoodapp.data.repository.fetchPaginationData
+import com.eduardo.fastfoodapp.network.fetchFoodItemsByPage
 import com.eduardo.fastfoodapp.ui.screens.*
 import com.eduardo.fastfoodapp.viewmodel.PedidoViewModel
 
@@ -37,7 +38,7 @@ fun NavigationComponent() {
                 var items by remember { mutableStateOf(listOf<FoodItem>()) }
 
                 LaunchedEffect(category) {
-                    val fetchedItems = fetchFoodItemsByCategory(category)
+                    val fetchedItems = fetchFoodItemsByPage(1, 20)
                     items = fetchedItems
                 }
 

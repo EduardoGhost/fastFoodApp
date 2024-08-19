@@ -3,8 +3,7 @@ package com.eduardo.fastfoodapp
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.eduardo.fastfoodapp.data.dao.PedidoDao
-import com.eduardo.fastfoodapp.data.domain.FoodItem
+import com.eduardo.fastfoodapp.data.model.FoodItem
 import com.eduardo.fastfoodapp.data.local.AppDatabase
 import com.eduardo.fastfoodapp.data.local.PedidoRepositoryImpl
 import com.eduardo.fastfoodapp.data.repository.PedidoRepository
