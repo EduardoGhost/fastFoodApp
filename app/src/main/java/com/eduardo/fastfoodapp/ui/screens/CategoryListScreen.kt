@@ -7,11 +7,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.InsertChart
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.eduardo.fastfoodapp.data.repository.fetchPaginationData
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -20,6 +24,23 @@ fun CategoryListScreen(
     onCategoryClick: (String) -> Unit,
     navController: NavController,
 ) {
+
+    var isRefreshing by remember { mutableStateOf(false) }
+    var categories by remember { mutableStateOf(categoryMap) }
+    val coroutineScope = rememberCoroutineScope()
+
+    fun refreshData() {
+        coroutineScope.launch {
+            isRefreshing = true
+            categories = fetchPaginationData()
+            isRefreshing = false
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        refreshData()
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -39,30 +60,36 @@ fun CategoryListScreen(
             )
         },
         content = { paddingValues ->
-            LazyColumn(
-                contentPadding = paddingValues,
+            SwipeRefresh(
+                state = rememberSwipeRefreshState(isRefreshing),
+                onRefresh = { refreshData() },
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(8.dp)
+                    .padding(paddingValues)
             ) {
-                items(categoryMap.toList()) { (category, count) ->
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp)
-                            .clickable { onCategoryClick(category) },
-                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-                    ) {
-                        Column(
+                LazyColumn(
+                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(categories.toList()) { (category) ->
+                        Card(
                             modifier = Modifier
-                                .padding(16.dp)
                                 .fillMaxWidth()
+                                .padding(vertical = 8.dp)
+                                .clickable { onCategoryClick(category) },
+                            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                         ) {
-                            Text(
-                                text = category,
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.onSurface
-                            )
+                            Column(
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = category,
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                            }
                         }
                     }
                 }
