@@ -2,7 +2,6 @@ package com.eduardo.fastfoodapp.ui.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
+import com.eduardo.fastfoodapp.components.IncrementDecrementButtonsComponent
 import com.eduardo.fastfoodapp.data.model.FoodItem
 import com.eduardo.fastfoodapp.viewmodel.PedidoViewModel
 
@@ -68,7 +68,7 @@ fun ItemListScreen(items: List<FoodItem>, viewModel: PedidoViewModel, navControl
             )
             LazyColumn {
                 items(filteredItems) { item ->
-                    var quantity by remember { mutableStateOf("1") }
+                    var quantity by remember { mutableStateOf(1) }
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
@@ -98,20 +98,15 @@ fun ItemListScreen(items: List<FoodItem>, viewModel: PedidoViewModel, navControl
                             style = MaterialTheme.typography.bodyMedium
                         )
 
-                        TextField(
-                            value = quantity,
-                            onValueChange = { quantity = it },
-                            label = { Text("Quantity") },
-                            modifier = Modifier
-                                .width(100.dp)
-                                .border(1.dp, Color.Gray)
-                                .padding(8.dp),
+                        IncrementDecrementButtonsComponent(
+                            quantity = quantity,
+                            onIncrement = { quantity += 1 },
+                            onDecrement = { if (quantity > 1) quantity -= 1 }
                         )
 
                         Button(
                             onClick = {
-                                val quantityInt = quantity.toIntOrNull() ?: 1
-                                viewModel.addPedidoToCart(item, quantityInt)
+                                viewModel.addPedidoToCart(item, quantity)
                                 Toast.makeText(context, "Item adicionado ao Carrinho!", Toast.LENGTH_SHORT).show()
                             },
                             modifier = Modifier.padding(top = 8.dp)
@@ -124,8 +119,6 @@ fun ItemListScreen(items: List<FoodItem>, viewModel: PedidoViewModel, navControl
         }
     }
 }
-
-
 
 
 
