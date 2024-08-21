@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.eduardo.fastfoodapp.components.IncrementDecrementButtonsComponent
+import com.eduardo.fastfoodapp.components.RateComponent
 import com.eduardo.fastfoodapp.data.model.FoodItem
 import com.eduardo.fastfoodapp.viewmodel.PedidoViewModel
 
@@ -93,6 +94,9 @@ fun ItemListScreen(items: List<FoodItem>, viewModel: PedidoViewModel, navControl
                             style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier.padding(bottom = 4.dp)
                         )
+
+                        RateComponent(rate = item.rate)
+
                         Text(
                             text = "Price: $${item.price}",
                             style = MaterialTheme.typography.bodyMedium
