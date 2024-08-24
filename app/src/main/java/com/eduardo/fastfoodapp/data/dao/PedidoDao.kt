@@ -13,15 +13,9 @@ interface PedidoDao {
 
     @Query("DELETE FROM pedido")
     suspend fun clearPedidos()
-}
 
-////    @Query("SELECT * FROM pedidos WHERE id = :id")
-////    suspend fun getPedidoById(id: String): PedidoEntity?
-////
-////    @Delete
-////    suspend fun deletePedido(pedido: PedidoEntity)
-////
-////    @Update
-////    suspend fun updatePedido(pedido: PedidoEntity)
+    @Delete
+    suspend fun deletePedido(pedido: PedidoEntity)
+}
 
 

@@ -26,6 +26,12 @@ class PedidoRepositoryImpl @Inject constructor(
     override suspend fun clearPedidos() {
         pedidoDao.clearPedidos()
     }
+
+    override suspend fun deletePedido(pedido: FoodItem) {
+        val pedidoEntity = pedido.toEntity(pedido.quantity)
+        Log.d("PedidoRepository", "Deleting pedido: $pedidoEntity")
+        pedidoDao.deletePedido(pedidoEntity)
+    }
 }
 
 

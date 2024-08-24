@@ -59,7 +59,13 @@ fun PedidoListScreen(viewModel: PedidoViewModel, navController: NavController) {
             } else {
                 LazyColumn {
                     items(pedidos) { pedido ->
-                        PedidoItem(pedido)
+                        PedidoItem(
+                            pedido = pedido,
+                            onRemove = {
+                                viewModel.removePedido(pedido)
+                                Toast.makeText(context, "${pedido.name} removido do carrinho!", Toast.LENGTH_SHORT).show()
+                            }
+                        )
                     }
                 }
             }
@@ -86,7 +92,7 @@ fun PedidoListScreen(viewModel: PedidoViewModel, navController: NavController) {
 }
 
 @Composable
-fun PedidoItem(pedido: FoodItem) {
+fun PedidoItem(pedido: FoodItem, onRemove: () -> Unit) {
     Column(
         modifier = Modifier
             .padding(8.dp)
@@ -94,6 +100,15 @@ fun PedidoItem(pedido: FoodItem) {
     ) {
         Text(text = pedido.name, style = MaterialTheme.typography.titleMedium)
         Text(text = "Quantidade: ${pedido.quantity}", style = MaterialTheme.typography.bodyMedium)
-        Text(text = "Preço: R$${pedido.price*pedido.quantity}", style = MaterialTheme.typography.bodyMedium)
+        Text(text = "Preço: R$${pedido.price * pedido.quantity}", style = MaterialTheme.typography.bodyMedium)
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Button(
+            onClick = onRemove,
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+        ) {
+            Text(text = "Remover", color = Color.White)
+        }
     }
 }

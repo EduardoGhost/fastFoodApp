@@ -38,6 +38,13 @@ class PedidoViewModel @Inject constructor(
         }
     }
 
+    fun removePedido(pedido: FoodItem) {
+        viewModelScope.launch {
+            pedidoRepository.deletePedido(pedido)
+            loadPedidos()
+        }
+    }
+
     fun finalizarCompra() {
         viewModelScope.launch {
             // Pegar pedidos
