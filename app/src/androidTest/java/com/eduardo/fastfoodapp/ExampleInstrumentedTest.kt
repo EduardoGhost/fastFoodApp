@@ -1,24 +1,24 @@
 package com.eduardo.fastfoodapp
 
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.ext.junit.runners.AndroidJUnit4
-
+import com.eduardo.fastfoodapp.data.repository.PedidoRepository
 import org.junit.Test
-import org.junit.runner.RunWith
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.times
 
-import org.junit.Assert.*
+class ExampleUnitTest {
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-@RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+    interface Service : PedidoRepository {
+        fun performAction()
+    }
+
     @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.eduardo.fastfoodapp", appContext.packageName)
+    fun mockitoIsWorking() {
+
+        val mockService = mock(Service::class.java)
+
+        mockService.performAction()
+
+        verify(mockService, times(1)).performAction()
     }
 }
