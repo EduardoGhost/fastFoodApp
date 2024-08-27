@@ -25,14 +25,22 @@ import com.eduardo.fastfoodapp.viewmodel.PedidoViewModel
 //item display
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ItemListScreen(items: List<FoodItem>, viewModel: PedidoViewModel, navController: NavController) {
+fun ItemListScreen(
+    items: List<FoodItem>,
+    viewModel: PedidoViewModel,
+    navController: NavController
+) {
     val context = LocalContext.current
     var searchQuery by remember { mutableStateOf("") }
+    val pedidos by viewModel.pedidos.collectAsState(initial = emptyList())
 
     val filteredItems = if (searchQuery.isEmpty()) {
         items
     } else {
         items.filter { it.name.contains(searchQuery, ignoreCase = true) || it.dsc.contains(searchQuery, ignoreCase = true) }
+    }
+
+    LaunchedEffect(pedidos) {
     }
 
     Scaffold(
@@ -51,8 +59,26 @@ fun ItemListScreen(items: List<FoodItem>, viewModel: PedidoViewModel, navControl
                     ),
                 scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
                 actions = {
-                    IconButton(onClick = { navController.navigate("pedidoList") }) {
-                        Icon(Icons.Default.ShoppingCart, contentDescription = "Carrinho", tint = Color.White)
+                    Box(
+                        contentAlignment = Alignment.CenterEnd,
+                        modifier = Modifier.padding(8.dp)
+                    ) {
+                        IconButton(onClick = { navController.navigate("pedidoList") }) {
+                            Icon(
+                                imageVector = Icons.Default.ShoppingCart,
+                                contentDescription = "Carrinho",
+                                tint = Color.White
+                            )
+                        }
+                        if (pedidos.isNotEmpty()) {
+                            Badge(
+                                containerColor = Color.Red,
+                                contentColor = Color.White,
+                                modifier = Modifier.offset(x = (-8).dp, y = (-8).dp)
+                            ) {
+                                Text("${pedidos.size}")
+                            }
+                        }
                     }
                 }
             )
@@ -94,8 +120,6 @@ fun ItemListScreen(items: List<FoodItem>, viewModel: PedidoViewModel, navControl
                             style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier.padding(bottom = 4.dp)
                         )
-
-                        RateComponent(rate = item.rate)
 
                         Text(
                             text = "Price: $${item.price}",
