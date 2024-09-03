@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Clonar o código do repositório
+                //Clonar o código do repositório
                 git url: 'https://github.com/EduardoGhost/fastFoodApp.git', branch: 'main'
             }
         }
