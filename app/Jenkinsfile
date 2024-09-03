@@ -1,0 +1,66 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Clonar o código do repositório
+                git url: 'https://github.com/EduardoGhost/fastFoodApp.git', branch: 'main'
+            }
+        }
+
+        stage('Setup JDK') {
+            steps {
+                // Configurar o JDK 11
+                script {
+                    env.JAVA_HOME = tool name: 'JDK11', type: 'JDK'
+                    env.PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Executar o build do projeto usando Gradle
+                sh './gradlew clean assembleDebug'
+            }
+        }
+
+        stage('Unit Tests') {
+            steps {
+                // Executar os testes unitários
+                sh './gradlew testDebugUnitTest'
+            }
+        }
+
+        stage('Instrumented Tests') {
+            steps {
+                // Executar os testes instrumentados no emulador
+                sh './gradlew connectedDebugAndroidTest'
+            }
+        }
+
+        stage('Lint Check') {
+            steps {
+                // Verificar problemas de lint no código
+                sh './gradlew lintDebug'
+            }
+        }
+    }
+
+    post {
+        always {
+            // Publicar resultados dos testes e do lint
+            junit '**/build/test-results/**/*.xml'
+            archiveArtifacts artifacts: '**/build/outputs/**/*.apk', allowEmptyArchive: true
+            publishHTML(target: [
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'build/reports/lint-results-debug.html',
+                reportFiles: 'lint-results-debug.html',
+                reportName: 'Lint Results'
+            ])
+        }
+    }
+}
