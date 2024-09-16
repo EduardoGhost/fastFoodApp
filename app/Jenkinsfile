@@ -2,16 +2,15 @@ pipeline {
     agent any
 
     stages {
-            stage('Checkout') {
-                steps {
-                    checkout scm
-                }
-            }
-
-
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                 bat './gradlew.bat assembleDebug'
+                checkout scm
             }
         }
+        stage('Build') {
+            steps {
+                bat './gradlew.bat assembleDebug'
+            }
+        }
+    }
 }
