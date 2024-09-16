@@ -13,7 +13,6 @@ pipeline {
         stage('Clean Gradle Cache') {
             steps {
                 bat 'gradlew.bat clean'
-                bat 'gradlew.bat cleanBuildCache'
             }
         }
         stage('Build') {
