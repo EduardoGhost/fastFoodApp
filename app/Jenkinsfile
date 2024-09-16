@@ -10,9 +10,14 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Clean Gradle Cache') {
+            steps {
+                bat 'gradlew.bat clean'
+            }
+        }
         stage('Build') {
             steps {
-                bat './gradlew.bat assembleDebug'
+                bat 'gradlew.bat assembleDebug'
             }
         }
     }
