@@ -2,21 +2,16 @@ pipeline {
     agent any
 
     stages {
+            stage('Checkout') {
+                steps {
+                    checkout scm
+                }
+            }
 
-//         stage('Setup JDK') {
-//             steps {
-//                 script {
-//                     env.JAVA_HOME = tool name: 'JDK11', type: 'JDK'
-//                     env.PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
-//                 }
-//             }
-//         }
 
         stage('Build') {
             steps {
-                bat 'build.bat'
+                 bat './gradlew.bat assembleDebug'
             }
         }
-
-    }
 }
