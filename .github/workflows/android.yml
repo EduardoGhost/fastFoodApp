@@ -1,16 +1,36 @@
-name: Trigger Jenkins Build
+name: Android CI
 
 on:
   push:
     branches:
-      - master
+      - master  # Roda ao fazer push para a branch master
+  pull_request:
+    branches:
+      - master  # Roda ao criar PR para a branch master
 
+# Todos os jobs
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest 
 
     steps:
-    - name: Trigger Jenkins Job
-      run: |
-        curl -X POST "https://991c-177-86-177-163.ngrok-free.app" \
-        --user "<admin>:<c835285395014bada754daba2360fa6a>"
+    - name: Check out code
+      uses: actions/checkout@v4  
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4  
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Install dependencies
+      run: ./gradlew dependencies 
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew  
+
+    - name: Build with Gradle
+      run: ./gradlew assembleDebug  
+
+    
