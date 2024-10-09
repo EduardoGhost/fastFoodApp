@@ -121,6 +121,8 @@ fun ItemListScreen(
                             modifier = Modifier.padding(bottom = 4.dp)
                         )
 
+                        RateComponent(rate = item.rate)
+
                         Text(
                             text = "Price: $${item.price}",
                             style = MaterialTheme.typography.bodyMedium
